@@ -2,6 +2,5 @@
 
 require_relative '../lib/environment'
 
-puts "in the binary executebale"
+COVIDTracker::CLI.new.start 
 
-COVIDTracker::APIManager.get_status

@@ -1,8 +1,9 @@
 require_relative "./COVIDTracker/version"
+require_relative './api_manager'
+require_relative './cli'
+
 require 'pry'
 require 'httparty'
-
-require_relative "./ApiManager"
 
 module COVIDTracker
   class Error < StandardError; end
