@@ -5,6 +5,7 @@ require_relative './cases'
 
 require 'pry'
 require 'httparty'
+require 'colorize'
 
 module COVIDTracker
   class Error < StandardError; end
