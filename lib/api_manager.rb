@@ -8,9 +8,25 @@ class COVIDTracker::APIManager
             response.each do |c|
                 province = c["Province"]
                 confirmed = c["Confirmed"]
-                COVIDTracker::Cases.new(province,confirmed)
+                deaths = c["Deaths"]
+                active = c["Active"]
+                # binding.pry
+                COVIDTracker::Cases.new(province,confirmed,deaths,active)
               
             end 
-            # binding.pry 
+            
         end 
+
+        def self.get_covid_details(covid_object)
+            puts "\nMAKING A NETWORK REQUEST........\n"
+
+            # url = covid_object.url 
+            url = "https://api.covid19api.com/live/country/united-states/status/confirmed"
+            response = HTTParty.get(url)
+            # deaths = response["Deaths"]
+            # active = response["Active"]
+            # deaths = virus["Deaths"]
+            # active = virus["Active"]
+        
+    end 
 end  

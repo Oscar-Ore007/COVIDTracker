@@ -28,7 +28,7 @@ def main_loop
             next
         else 
            puts input 
-        #   display_single_state(input)  
+           display_single_state(input)  
         
             end 
         end 
@@ -45,8 +45,8 @@ end
     def get_state_choice
         input = gets.strip.downcase
         return input if input == "exit"
-        if input.to_i.between?(1,COVIDTracker::Cases.all.length)
-            return input.to_i
+        if input.to_i.between?(1, COVIDTracker::Cases.all.length)
+            return input.to_i - 1 
         else 
             puts "ummm.. that doesnt make sense, please try again."
             return "invalid"
@@ -59,6 +59,12 @@ end
         covid.each.with_index(1) do |covid, index|
             puts "#{index}. #{covid.province}" 
         end 
+    end 
+
+    def display_single_state(i)
+        covid_object = COVIDTracker::Cases.all[i]
+        COVIDTracker::APIManager.get_covid_details(covid_object)
+        binding.pry 
     end 
 
     def display_instructions
