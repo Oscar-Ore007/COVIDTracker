@@ -1,9 +1,29 @@
 class COVIDTracker::CLI  
 
 def start 
+    welcome 
     intro
     get_state_info 
     main_loop
+end 
+
+def welcome
+    print "
+
+    ..######...#######..##.....##.####.########..########.########.....###.....######..##....##.########.########.
+    .##....##.##.....##.##.....##..##..##.....##....##....##.....##...##.##...##....##.##...##..##.......##.....##
+    .##.......##.....##.##.....##..##..##.....##....##....##.....##..##...##..##.......##..##...##.......##.....##
+    .##.......##.....##.##.....##..##..##.....##....##....########..##.....##.##.......#####....######...########.
+    .##.......##.....##..##...##...##..##.....##....##....##...##...#########.##.......##..##...##.......##...##..
+    .##....##.##.....##...##.##....##..##.....##....##....##....##..##.....##.##....##.##...##..##.......##....##.
+    ..######...#######.....###....####.########.....##....##.....##.##.....##..######..##....##.########.##.....##
+                                                                                                               
+   ".cyan
+  
+   puts "
+   <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+   ".light_green
+   sleep(2)
 end 
 
 def intro
@@ -14,6 +34,8 @@ def intro
 end 
 
 def get_state_info
+    puts "Please any key to view COVID-19 Statistics in the United States"
+    gets
    COVIDTracker::APIManager.get_confirmed_cases
 end 
 
@@ -27,12 +49,11 @@ def main_loop
         when 'invalid' 
             next
         else 
-           puts input 
            display_single_state(input)  
         
             end 
         end 
-    puts "in main loop"
+    puts "THANK YOU! BE SAFE AND REMEBER TO WASH YOUR HANDS AND WEAR A MASK!".green
 end
 
 
@@ -45,7 +66,8 @@ end
     def get_state_choice
         input = gets.strip.downcase
         return input if input == "exit"
-        if input.to_i.between?(1, COVIDTracker::Cases.all.length)
+        if input.to_i.between?(1,COVIDTracker::Cases.all.length)
+        # if input.to_i.between?(73, COVIDTracker::Cases.all.length)
             return input.to_i - 1 
         else 
             puts "ummm.. that doesnt make sense, please try again."
@@ -64,7 +86,10 @@ end
     def display_single_state(i)
         covid_object = COVIDTracker::Cases.all[i]
         COVIDTracker::APIManager.get_covid_details(covid_object)
-        binding.pry 
+        # binding.pry 
+        puts covid_object.full_details
+        puts 'press any key to continue'
+        gets
     end 
 
     def display_instructions
