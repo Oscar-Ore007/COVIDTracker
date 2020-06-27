@@ -2,8 +2,8 @@
 
 class COVIDTracker::APIManager
 
-        def self.get_confirmed_cases
-            url = "https://api.covid19api.com/live/country/united-states/status/confirmed"
+        def self.get_confirmed_cases(page=1, limit=20)
+            url = "https://api.covid19api.com/live/country/united-states/status/confirmed?offset=#{(page - 1)* limit}&limit=#{limit}"
             response = HTTParty.get(url)
             response.each do |c|
                 province = c["Province"]
@@ -12,6 +12,10 @@ class COVIDTracker::APIManager
                 active = c["Active"]
                 # binding.pry
                 COVIDTracker::Cases.new(province,confirmed,deaths,active)
+                # return {
+                #     response: response["next"]
+                #     previous: response["previous"]
+                # }
               
             end 
             
